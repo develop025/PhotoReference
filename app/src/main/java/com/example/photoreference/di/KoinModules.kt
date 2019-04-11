@@ -16,7 +16,8 @@ import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
-const val BASE_URL: String = "https://api.flickr.com"
+const val FLICKR_URL: String = "https://api.flickr.com/"
+const val GITHUB_URL: String = "https://raw.githubusercontent.com/"
 
 val mainModule = module {
     viewModel { ListViewModel(get()) }
@@ -25,8 +26,8 @@ val mainModule = module {
     factory { provideGson() }
     factory { createOkHttpClient() }
     factory { provideExecutor() }
-    single { provideRetrofit(get(), BASE_URL) }
-    single { provideApiPixelService(get()) }
+    scope("FLICKR") { provideApiService(get(), FLICKR_URL) }
+    scope("GITHUB") { provideApiService(get(), GITHUB_URL) }
 }
 
 val referenceApp = listOf(mainModule)
@@ -35,9 +36,9 @@ fun createOkHttpClient(): OkHttpClient {
     val httpLoggingInterceptor = HttpLoggingInterceptor()
     httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BASIC
     return OkHttpClient.Builder()
-            .connectTimeout(20L, TimeUnit.SECONDS)
-            .readTimeout(20L, TimeUnit.SECONDS)
-            .addInterceptor(httpLoggingInterceptor).build()
+        .connectTimeout(20L, TimeUnit.SECONDS)
+        .readTimeout(20L, TimeUnit.SECONDS)
+        .addInterceptor(httpLoggingInterceptor).build()
 }
 
 fun provideGson(): Gson {
@@ -48,17 +49,16 @@ fun provideExecutor(): Executor {
     return Executors.newCachedThreadPool()
 }
 
-fun provideRetrofit(gson: Gson, baseUrl: String): Retrofit {
+fun provideApiService(gson: Gson, baseUrl: String): FlickrService {
+
     val client = OkHttpClient.Builder()
-            .build()
+        .build()
 
-    return Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .client(client)
-            .baseUrl(baseUrl)
-            .build()
-}
+    val retrofit = Retrofit.Builder()
+        .addConverterFactory(GsonConverterFactory.create(gson))
+        .client(client)
+        .baseUrl(baseUrl)
+        .build()
 
-fun provideApiPixelService(restAdapter: Retrofit): FlickrService {
-    return restAdapter.create(FlickrService::class.java)
+    return retrofit.create(FlickrService::class.java)
 }
