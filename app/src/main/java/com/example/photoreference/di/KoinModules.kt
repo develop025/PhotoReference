@@ -1,14 +1,18 @@
 package com.example.photoreference.di
 
 import com.example.photoreference.api.FlickrService
+import com.example.photoreference.ui.list.ListFragment
 import com.example.photoreference.ui.list.ListViewModel
 import com.example.photoreference.ui.list.paged.PhotoDataSource
 import com.example.photoreference.ui.list.paged.PhotoDataSourceFactory
+import com.example.photoreference.ui.main.MainActivity
+import com.example.photoreference.ui.menu.MenuFragment
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.viewmodel.dsl.viewModel
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -26,8 +30,8 @@ val mainModule = module {
     factory { provideGson() }
     factory { createOkHttpClient() }
     factory { provideExecutor() }
-    scope("FLICKR") { provideApiService(get(), FLICKR_URL) }
-    scope("GITHUB") { provideApiService(get(), GITHUB_URL) }
+    scope(named<ListFragment>()) { scoped { provideApiService(get(), FLICKR_URL) } }
+    scope(named<MenuFragment>()) { scoped { provideApiService(get(), GITHUB_URL) } }
 }
 
 val referenceApp = listOf(mainModule)
