@@ -7,7 +7,7 @@ import android.arch.paging.PagedList
 import com.example.photoreference.data.Photo
 import com.example.photoreference.ui.list.paged.PhotoDataSourceFactory
 
-class ListViewModel(private val sourceFactory: PhotoDataSourceFactory) : ViewModel() {
+class ListViewModel(private val sourceFactory: PhotoDataSourceFactory ) : ViewModel() {
     private val pageSize = 5
     private val config = PagedList.Config.Builder()
             .setPageSize(pageSize)

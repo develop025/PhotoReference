@@ -18,8 +18,8 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-      /*  buildConfigField ("String", "FLICKR_API_KEY", "${FLICKR_API_KEY}")
-        buildConfigField ("String", "FLICKR_API_SECRET", "${FLICKR_API_SECRET}")*/
+        /*  buildConfigField ("String", "FLICKR_API_KEY", "${FLICKR_API_KEY}")
+          buildConfigField ("String", "FLICKR_API_SECRET", "${FLICKR_API_SECRET}")*/
     }
     buildTypes {
         release {
@@ -45,8 +45,9 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'android.arch.navigation:navigation-fragment:1.0.0'
     // Koin
-    implementation 'org.koin:koin-android:1.0.2'
-    implementation 'org.koin:koin-android-viewmodel:1.0.2'
+    implementation 'org.koin:koin-android:2.0.0-rc-2'
+    implementation 'org.koin:koin-android-viewmodel:2.0.0-rc-2'
+    implementation 'org.koin:koin-android-scope:2.0.0-rc-2'
     //json
     implementation 'com.google.code.gson:gson:2.8.5'
     // Networking
