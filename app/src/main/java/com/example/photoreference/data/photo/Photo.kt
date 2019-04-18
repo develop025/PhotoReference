@@ -1,4 +1,4 @@
-package com.example.photoreference.data
+package com.example.photoreference.data.photo
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

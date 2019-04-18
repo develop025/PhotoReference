@@ -4,7 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
-import com.example.photoreference.data.Photo
+import com.example.photoreference.data.photo.Photo
 import com.example.photoreference.ui.list.paged.PhotoDataSourceFactory
 
 class ListViewModel(private val sourceFactory: PhotoDataSourceFactory ) : ViewModel() {

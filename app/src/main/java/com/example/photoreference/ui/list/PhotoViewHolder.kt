@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.example.photoreference.R
-import com.example.photoreference.data.Photo
+import com.example.photoreference.data.photo.Photo
 import kotlinx.android.synthetic.main.photo.view.*
 
 class PhotoViewHolder(view: View) : RecyclerView.ViewHolder(view) {

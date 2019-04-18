@@ -1,6 +1,6 @@
 package com.example.photoreference.api
 
-import com.example.photoreference.data.SearchResponse
+import com.example.photoreference.data.photo.SearchResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

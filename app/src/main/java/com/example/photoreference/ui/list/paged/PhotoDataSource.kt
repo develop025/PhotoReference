@@ -2,8 +2,8 @@ package com.example.photoreference.ui.list.paged
 
 import android.arch.paging.PageKeyedDataSource
 import com.example.photoreference.api.FlickrService
-import com.example.photoreference.data.Photo
-import com.example.photoreference.data.SearchResponse
+import com.example.photoreference.data.photo.Photo
+import com.example.photoreference.data.photo.SearchResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

@@ -4,7 +4,7 @@ import android.arch.paging.PagedListAdapter
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import com.example.photoreference.data.Photo
+import com.example.photoreference.data.photo.Photo
 
 class PhotosListAdapter :
     PagedListAdapter<Photo, RecyclerView.ViewHolder>(PhotoDiffCallback) {
