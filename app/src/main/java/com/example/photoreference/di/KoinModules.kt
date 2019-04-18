@@ -1,18 +1,15 @@
 package com.example.photoreference.di
 
 import com.example.photoreference.api.FlickrService
-import com.example.photoreference.ui.list.ListFragment
+import com.example.photoreference.api.GithubService
 import com.example.photoreference.ui.list.ListViewModel
 import com.example.photoreference.ui.list.paged.PhotoDataSource
 import com.example.photoreference.ui.list.paged.PhotoDataSourceFactory
-import com.example.photoreference.ui.main.MainActivity
-import com.example.photoreference.ui.menu.MenuFragment
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.viewmodel.dsl.viewModel
-import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -28,10 +25,11 @@ val mainModule = module {
     factory { PhotoDataSourceFactory(get()) }
     factory { PhotoDataSource(get()) }
     factory { provideGson() }
+    /*factory { provideClient() }*/
     factory { createOkHttpClient() }
     factory { provideExecutor() }
-    scope(named<ListFragment>()) { scoped { provideApiService(get(), FLICKR_URL) } }
-    scope(named<MenuFragment>()) { scoped { provideApiService(get(), GITHUB_URL) } }
+    factory { provideFlickrApiService(get(), get(), FLICKR_URL) }
+    factory { provideGithubApiService(get(), get(), GITHUB_URL) }
 }
 
 val referenceApp = listOf(mainModule)
@@ -49,15 +47,15 @@ fun provideGson(): Gson {
     return GsonBuilder().setLenient().create()
 }
 
+/*fun provideClient(): OkHttpClient {
+    return OkHttpClient.Builder().build()
+}*/
+
 fun provideExecutor(): Executor {
     return Executors.newCachedThreadPool()
 }
 
-fun provideApiService(gson: Gson, baseUrl: String): FlickrService {
-
-    val client = OkHttpClient.Builder()
-        .build()
-
+fun provideFlickrApiService(client: OkHttpClient, gson: Gson, baseUrl: String): FlickrService {
     val retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create(gson))
         .client(client)
@@ -65,4 +63,14 @@ fun provideApiService(gson: Gson, baseUrl: String): FlickrService {
         .build()
 
     return retrofit.create(FlickrService::class.java)
+}
+
+fun provideGithubApiService(client: OkHttpClient, gson: Gson, baseUrl: String): GithubService {
+    val retrofit = Retrofit.Builder()
+        .addConverterFactory(GsonConverterFactory.create(gson))
+        .client(client)
+        .baseUrl(baseUrl)
+        .build()
+
+    return retrofit.create(GithubService::class.java)
 }
