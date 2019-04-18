@@ -7,8 +7,8 @@ import com.google.gson.annotations.SerializedName
 class Title(
     @SerializedName("language")
     @Expose
-    private val language: String? = null,
+    val language: String? = null,
     @SerializedName("value")
     @Expose
-    private val value: String? = null
+    val value: String? = null
 )

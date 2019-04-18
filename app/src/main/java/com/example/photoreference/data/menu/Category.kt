@@ -13,10 +13,13 @@ class Category(
     private val name: String? = null,
     @SerializedName("title")
     @Expose
-    private val title: List<Title>? = null,
+    val title: List<Title>? = null,
     @SerializedName("order")
     @Expose
     private val order: String? = null,
+    @SerializedName("icon")
+    @Expose
+    val icon: String? = null,
     @SerializedName("tag")
     @Expose
     private val tag: String? = null

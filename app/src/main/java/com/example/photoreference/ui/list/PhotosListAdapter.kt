@@ -35,9 +35,4 @@ class PhotosListAdapter :
     override fun getItemViewType(position: Int): Int {
         return if (position < super.getItemCount()) DATA_VIEW_TYPE else FOOTER_VIEW_TYPE
     }
-
-    /*fun setState(state: State) {
-        this.state = state
-        notifyItemChanged(super.getItemCount())
-    }*/
 }
