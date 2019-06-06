@@ -1,14 +1,14 @@
 //::::::::::::::::::::::::::::::::::::::::::::::::: RELEASE :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::/
 ext {
-    TASK_NUMBER          = 1
+    TASK_NUMBER = 1
 
-    VERSION             = 1
-    APPLICATION_ID      = "xxx.xxxxxxxx.xxxxx"
-    APPLICATION_NAME    = "PhotoReference"
+    VERSION = 1
+    APPLICATION_ID = "xxx.xxxxxxxx.xxxxx"
+    APPLICATION_NAME = "PhotoReference"
 
     ENABLE_UPDATE_DATA = false
     ENABLE_DEBUG_MINIFY = true
-    IS_RELEASE= false
+    IS_RELEASE = false
     BLOCK = false
 
     FLICKR_API_KEY = "e52398cf1e4ade2f455cf132a5b3a281"
@@ -33,12 +33,13 @@ applyRetrofitDependencies()
 applyListDependencies()
 applyPagingDependencies()
 applyLiveDataDependencies()
+applyStethoDependencies()
+
 android {
     applyConfig()
 }
 
 dependencies {
-
 }
 //::::::::::::::::::::::::::::::::::::::::::::::::: COMMON ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::/
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::/

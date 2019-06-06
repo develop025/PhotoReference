@@ -191,6 +191,12 @@ ext.applyPagingDependencies = {
     }
 }
 
+ext.applyStethoDependencies = {
+    dependencies {
+        implementation "com.facebook.stetho:stetho:1.5.1"
+    }
+}
+
 ext.applyLiveDataDependencies = {
     dependencies {
         implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
