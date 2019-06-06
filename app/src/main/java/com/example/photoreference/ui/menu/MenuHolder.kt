@@ -10,7 +10,7 @@ import java.util.*
 class MenuHolder(private val view: View) : RecyclerView.ViewHolder(view) {
     fun bind(category: Category, menuClickListener: MenuFragment.MenuClickListener) {
         view.setOnClickListener {
-            menuClickListener.onClick(category)
+            menuClickListener.onClick(category.tag)
         }
 
         Glide.with(view.menuImage)

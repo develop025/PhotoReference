@@ -15,7 +15,8 @@ class ListViewModel(private val sourceFactory: PhotoDataSourceFactory) : ViewMod
         .setEnablePlaceholders(false)
         .build()
 
-    fun getImages(): LiveData<PagedList<Photo>> {
+    fun getImages(tag: String): LiveData<PagedList<Photo>> {
+        sourceFactory.dataSource.tag = tag
         return LivePagedListBuilder<Int, Photo>(sourceFactory, config).build()
     }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
@@ -25,9 +26,13 @@ class MenuFragment : Fragment() {
         viewModel.getMenus().observe(viewLifecycleOwner, Observer { categories ->
             categories?.categories?.let {
                 view.list.layoutManager = GridLayoutManager(context, 2)
-                view.list.adapter = MenuListAdapter(it,object:MenuClickListener{
-                    override fun onClick(category: Category) {
-                        findNavController().navigate(R.id.action_menuFragment_to_listFragment)
+                view.list.adapter = MenuListAdapter(it, object : MenuClickListener {
+                    override fun onClick(tag: String) {
+                        val bundle = bundleOf("tag" to tag)
+                        findNavController().navigate(
+                            R.id.action_menuFragment_to_listFragment,
+                            bundle
+                        )
                     }
                 })
             }
@@ -35,7 +40,7 @@ class MenuFragment : Fragment() {
         return view
     }
 
-    interface MenuClickListener{
-        fun onClick(category: Category)
+    interface MenuClickListener {
+        fun onClick(tag: String)
     }
 }

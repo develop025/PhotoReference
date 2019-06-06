@@ -11,12 +11,12 @@ import retrofit2.Response
 class PhotoDataSource(
     private val pixelService: FlickrService
 ) : PageKeyedDataSource<Int, Photo>() {
-
+    var tag: String = "tag"
     override fun loadInitial(
         params: LoadInitialParams<Int>,
         callback: LoadInitialCallback<Int, Photo>
     ) {
-        pixelService.getPhotos("tag", 5, 1)
+        pixelService.getPhotos(tag, 5, 1)
             .enqueue(object : Callback<SearchResponse> {
                 override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
                 }
@@ -37,7 +37,7 @@ class PhotoDataSource(
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Photo>) {
-        pixelService.getPhotos("tag", params.requestedLoadSize, params.key)
+        pixelService.getPhotos(tag, params.requestedLoadSize, params.key)
             .enqueue(object : Callback<SearchResponse> {
                 override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
                 }

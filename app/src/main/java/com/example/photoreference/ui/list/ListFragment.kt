@@ -13,7 +13,12 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ListFragment : Fragment() {
     private val viewModel: ListViewModel by viewModel()
+    private var requestTag:String = ""
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requestTag = arguments?.getString("tag")?:""
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,7 +33,7 @@ class ListFragment : Fragment() {
     }
 
     private fun showImages() {
-        viewModel.getImages().observe(this, Observer { list ->
+        viewModel.getImages(requestTag).observe(this, Observer { list ->
             list?.let {
                 photoAdapter.submitList(it)
             }

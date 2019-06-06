@@ -25,6 +25,7 @@ class ScreenDelegate(private val activity: AppCompatActivity) :
             val decorView = activity.window.decorView
             decorView
                 .setOnSystemUiVisibilityChangeListener { visibility ->
+                    @Suppress("DEPRECATED_IDENTITY_EQUALS")
                     if (visibility and View.SYSTEM_UI_FLAG_FULLSCREEN === 0) {
                         decorView.systemUiVisibility = flags
                     }

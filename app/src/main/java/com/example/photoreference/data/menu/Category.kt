@@ -22,5 +22,5 @@ class Category(
     val icon: String? = null,
     @SerializedName("tag")
     @Expose
-    private val tag: String? = null
+    val tag: String = ""
 )

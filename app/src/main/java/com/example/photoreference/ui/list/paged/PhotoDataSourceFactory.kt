@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import com.example.photoreference.data.photo.Photo
 
-class PhotoDataSourceFactory(private val dataSource: PhotoDataSource) :
+class PhotoDataSourceFactory(val dataSource: PhotoDataSource) :
     DataSource.Factory<Int, Photo>() {
 
     private val dataSourceLiveData = MutableLiveData<PhotoDataSource>()
