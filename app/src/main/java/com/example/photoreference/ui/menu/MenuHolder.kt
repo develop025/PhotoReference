@@ -1,7 +1,7 @@
 package com.example.photoreference.ui.menu
 
-import android.support.v7.widget.RecyclerView
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.photoreference.data.menu.Category
 import kotlinx.android.synthetic.main.menu_item.view.*

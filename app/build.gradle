@@ -29,7 +29,10 @@ apply plugin: "androidx.navigation.safeargs.kotlin"
 apply from: "../common.gradle"
 applyCommonXDependencies()
 applyGlideDependencies()
-
+applyRetrofitDependencies()
+applyListDependencies()
+applyPagingDependencies()
+applyLiveDataDependencies()
 android {
     applyConfig()
 }

@@ -1,7 +1,7 @@
 package com.example.photoreference.ui.list.paged
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.paging.DataSource
+import androidx.lifecycle.MutableLiveData
+import androidx.paging.DataSource
 import com.example.photoreference.data.photo.Photo
 
 class PhotoDataSourceFactory(private val dataSource: PhotoDataSource) :

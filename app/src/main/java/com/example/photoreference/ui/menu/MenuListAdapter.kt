@@ -1,9 +1,9 @@
 package com.example.photoreference.ui.menu
 
-import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.example.photoreference.data.menu.Category
 import android.view.LayoutInflater
+import androidx.recyclerview.widget.RecyclerView
 import com.example.photoreference.R
 
 class MenuListAdapter(val list: List<Category>) : RecyclerView.Adapter<MenuHolder>() {

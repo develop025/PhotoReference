@@ -1,9 +1,9 @@
 package com.example.photoreference.ui.list
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.photoreference.R
 import com.example.photoreference.data.photo.Photo

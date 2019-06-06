@@ -1,8 +1,8 @@
 package com.example.photoreference.ui.menu
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.photoreference.api.GithubService
 import com.example.photoreference.data.menu.Categories
 import retrofit2.Call

@@ -65,7 +65,7 @@ ext.applyConfig = {
             }
         }
 
-        def keyFile = file("../${rootProject.name.toLowerCase()}.jks")
+        def keyFile = file("../${rootProject.name}.jks")
         def testKeyFile = file("../${DEBUG_KEY_NAME}.jks")
 
         if (!keyFile.exists()) preBuild.dependsOn createKeystore
@@ -187,7 +187,7 @@ ext.applyRetrofitDependencies = {
 
 ext.applyPagingDependencies = {
     dependencies {
-        implementation "android.arch.paging:runtime:1.0.1"
+        implementation "androidx.paging:paging-runtime:2.1.0"
     }
 }
 

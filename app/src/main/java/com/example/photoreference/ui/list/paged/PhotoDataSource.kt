@@ -1,6 +1,6 @@
 package com.example.photoreference.ui.list.paged
 
-import android.arch.paging.PageKeyedDataSource
+import androidx.paging.PageKeyedDataSource
 import com.example.photoreference.api.FlickrService
 import com.example.photoreference.data.photo.Photo
 import com.example.photoreference.data.photo.SearchResponse

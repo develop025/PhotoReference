@@ -10,7 +10,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.android.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -27,7 +27,6 @@ val mainModule = module {
     factory { PhotoDataSourceFactory(get()) }
     factory { PhotoDataSource(get()) }
     factory { provideGson() }
-    /*factory { provideClient() }*/
     factory { createOkHttpClient() }
     factory { provideExecutor() }
     factory { provideFlickrApiService(get(), get(), FLICKR_URL) }
@@ -48,10 +47,6 @@ fun createOkHttpClient(): OkHttpClient {
 fun provideGson(): Gson {
     return GsonBuilder().setLenient().create()
 }
-
-/*fun provideClient(): OkHttpClient {
-    return OkHttpClient.Builder().build()
-}*/
 
 fun provideExecutor(): Executor {
     return Executors.newCachedThreadPool()
