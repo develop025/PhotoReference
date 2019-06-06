@@ -6,7 +6,10 @@ import android.view.LayoutInflater
 import androidx.recyclerview.widget.RecyclerView
 import com.example.photoreference.R
 
-class MenuListAdapter(val list: List<Category>) : RecyclerView.Adapter<MenuHolder>() {
+class MenuListAdapter(
+    val list: List<Category>,
+    private val menuClickListener: MenuFragment.MenuClickListener
+) : RecyclerView.Adapter<MenuHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuHolder {
         val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
         return MenuHolder(view)
@@ -19,6 +22,6 @@ class MenuListAdapter(val list: List<Category>) : RecyclerView.Adapter<MenuHolde
     override fun getItemCount() = list.size
 
     override fun onBindViewHolder(holder: MenuHolder, position: Int) {
-        holder.bind(list[position])
+        holder.bind(list[position], menuClickListener)
     }
 }

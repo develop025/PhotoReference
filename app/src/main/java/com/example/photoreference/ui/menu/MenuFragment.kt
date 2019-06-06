@@ -6,8 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.photoreference.R
+import com.example.photoreference.data.menu.Category
 import kotlinx.android.synthetic.main.fragment_menu.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -22,9 +25,17 @@ class MenuFragment : Fragment() {
         viewModel.getMenus().observe(viewLifecycleOwner, Observer { categories ->
             categories?.categories?.let {
                 view.list.layoutManager = GridLayoutManager(context, 2)
-                view.list.adapter = MenuListAdapter(it)
+                view.list.adapter = MenuListAdapter(it,object:MenuClickListener{
+                    override fun onClick(category: Category) {
+                        findNavController().navigate(R.id.action_menuFragment_to_listFragment)
+                    }
+                })
             }
         })
         return view
+    }
+
+    interface MenuClickListener{
+        fun onClick(category: Category)
     }
 }

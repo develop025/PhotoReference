@@ -8,7 +8,11 @@ import kotlinx.android.synthetic.main.menu_item.view.*
 import java.util.*
 
 class MenuHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-    fun bind(category: Category) {
+    fun bind(category: Category, menuClickListener: MenuFragment.MenuClickListener) {
+        view.setOnClickListener {
+            menuClickListener.onClick(category)
+        }
+
         Glide.with(view.menuImage)
             .load(category.icon)
             .into(view.menuImage)

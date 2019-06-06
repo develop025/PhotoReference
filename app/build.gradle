@@ -7,7 +7,7 @@ ext {
     APPLICATION_NAME = "PhotoReference"
 
     ENABLE_UPDATE_DATA = false
-    ENABLE_DEBUG_MINIFY = true
+    ENABLE_DEBUG_MINIFY = false
     IS_RELEASE = false
     BLOCK = false
 

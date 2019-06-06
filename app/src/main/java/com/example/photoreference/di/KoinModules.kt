@@ -6,6 +6,9 @@ import com.example.photoreference.ui.list.ListViewModel
 import com.example.photoreference.ui.list.paged.PhotoDataSource
 import com.example.photoreference.ui.list.paged.PhotoDataSourceFactory
 import com.example.photoreference.ui.menu.MenuViewModel
+import com.facebook.stetho.BuildConfig
+import com.facebook.stetho.Stetho
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -41,7 +44,9 @@ fun createOkHttpClient(): OkHttpClient {
     return OkHttpClient.Builder()
         .connectTimeout(20L, TimeUnit.SECONDS)
         .readTimeout(20L, TimeUnit.SECONDS)
-        .addInterceptor(httpLoggingInterceptor).build()
+        .addInterceptor(httpLoggingInterceptor)
+        .addNetworkInterceptor(StethoInterceptor())
+        .build()
 }
 
 fun provideGson(): Gson {

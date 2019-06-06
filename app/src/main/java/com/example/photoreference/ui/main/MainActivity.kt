@@ -13,10 +13,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         screenDelegate = ScreenDelegate(this)
         screenDelegate.setFullScreen()
-
-        val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
-        //navController.navigate(R.id.listFragment)
-        navController.navigate(R.id.menuFragment)
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
