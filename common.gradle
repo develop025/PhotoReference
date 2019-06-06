@@ -1,0 +1,272 @@
+//::::::::::::::::::::::::::::::::::::::::::::::::: CONFIG ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::/
+ext.anko_version = '0.10.5'
+ext.support_version = '28.0.0'
+ext.androidX_version = '1.0.0'
+ext.koin_version = '2.0.0'
+//::::::::::::::::::::::::::::::::::::::::::::::::: CONFIG ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::/
+//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::/
+
+//::::::::::::::::::::::::::::::::::::::::::::::::: DEBUG :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::/
+ext {
+    LOG_TAG = "myapp"
+    PASS_SUFIX = "secret_for_pass"
+    DEBUG_KEY_NAME = "debugkey"
+}
+//::::::::::::::::::::::::::::::::::::::::::::::::: DEBUG :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::/
+//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::/
+
+//::::::::::::::::::::::::::::::::::::::::::::::::: COMMON ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::/
+ext.buildConfigField = { flavor, name, value, shouldEncrypt = false ->
+    if (shouldEncrypt) flavor.buildConfigField "String", name, "\"" + encrypt(value) + "\""
+    else flavor.buildConfigField "String", name, "\"" + value + "\""
+}
+
+ext.applyConfig = {
+    android {
+        compileSdkVersion 28
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+
+        defaultConfig {
+            minSdkVersion 19
+            targetSdkVersion 28
+
+            versionCode VERSION
+            versionName "$VERSION.0"
+
+            initDefaultResValues()
+        }
+
+        buildTypes {
+            debug {
+                initDebugResValues()
+
+                minifyEnabled ENABLE_DEBUG_MINIFY
+                shrinkResources ENABLE_DEBUG_MINIFY
+
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+                applicationVariants.all { variant ->
+                    renameAPK(variant, defaultConfig, variant.name)
+                }
+            }
+
+            release {
+                initReleaseResValues()
+
+                minifyEnabled true
+                shrinkResources true
+
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+                applicationVariants.all { variant ->
+                    renameAPK(variant, defaultConfig, variant.name)
+                }
+            }
+        }
+
+        def keyFile = file("../${rootProject.name.toLowerCase()}.jks")
+        def testKeyFile = file("../${DEBUG_KEY_NAME}.jks")
+
+        if (!keyFile.exists()) preBuild.dependsOn createKeystore
+
+        if (!testKeyFile.exists()) preBuild.dependsOn createTestKeystore
+
+        signingConfigs {
+            develop {
+                storeFile testKeyFile
+                storePassword "${stripExtension(testKeyFile.getName())}_${PASS_SUFIX.toString()}"
+                keyAlias stripExtension(testKeyFile.getName())
+                keyPassword "${stripExtension(testKeyFile.getName())}_${PASS_SUFIX.toString()}"
+            }
+
+            finalRelease {
+                storeFile keyFile
+                storePassword "${stripExtension(keyFile.getName())}_${PASS_SUFIX.toString()}"
+                keyAlias stripExtension(keyFile.getName())
+                keyPassword "${stripExtension(keyFile.getName())}_${PASS_SUFIX.toString()}"
+            }
+        }
+
+        flavorDimensions "version"
+        productFlavors {
+            develop {
+                dimension "version"
+                applicationId "play.game.dev"
+                signingConfig signingConfigs.develop
+            }
+            finalRelease {
+                dimension "version"
+                applicationId APPLICATION_ID
+                signingConfig signingConfigs.finalRelease
+            }
+        }
+        variantFilter { variant ->
+            def names = variant.flavors*.name
+            if (BLOCK && (names.contains("finalRelease") || names.contains("develop"))) {
+                setIgnore(true)
+            } else if (!BLOCK && !IS_RELEASE && names.contains("finalRelease")) {
+                setIgnore(true)
+            }
+        }
+    }
+}
+
+ext.initDefaultResValues = {
+    android {
+        defaultConfig {
+            resValue "string", "app_name", "${APPLICATION_NAME}"
+        }
+    }
+}
+
+ext.initDebugResValues = {
+    android {
+        buildTypes {
+            debug {
+                buildConfigField(debug, "LOG_TAG", "${LOG_TAG}", true)
+            }
+        }
+    }
+}
+
+ext.initReleaseResValues = {
+    android {
+        buildTypes {
+            release {
+                buildConfigField(release, "LOG_TAG", "${LOG_TAG}", true)
+            }
+        }
+    }
+}
+//::::::::::::::::::::::::::::::::::::::::::::::::: COMMON ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::/
+//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::/
+
+//::::::::::::::::::::::::::::::::::::::::::::::::: DEPENDENCIES ::::::::::::::::::::::::::::::::::::::::::::::::::::::/
+ext.applyCommonXDependencies = {
+    dependencies {
+        implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+        implementation 'androidx.appcompat:appcompat:1.0.2'
+        implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+        implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+        testImplementation 'junit:junit:4.12'
+        androidTestImplementation 'androidx.test:runner:1.2.0'
+        androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+        implementation 'androidx.navigation:navigation-runtime-ktx:2.0.0'
+        implementation 'androidx.navigation:navigation-fragment-ktx:2.0.0'
+        implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+        implementation 'androidx.lifecycle:lifecycle-viewmodel:2.0.0'
+        implementation "org.koin:koin-androidx-scope:$koin_version"
+        implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+        implementation 'com.google.android.material:material:1.0.0'
+        implementation 'androidx.core:core-ktx:1.0.2'
+        implementation 'android.arch.work:work-runtime:1.0.1'
+    }
+}
+
+ext.applyListDependencies = {
+    dependencies {
+        implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    }
+}
+
+ext.applyGlideDependencies = {
+    dependencies {
+        implementation 'com.github.bumptech.glide:glide:4.9.0'
+    }
+}
+
+ext.applyRetrofitDependencies = {
+    dependencies {
+        implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+        implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+        implementation 'com.squareup.okhttp3:okhttp:3.13.1'
+        implementation 'com.squareup.okhttp3:logging-interceptor:3.12.0'
+    }
+}
+
+ext.applyPagingDependencies = {
+    dependencies {
+        implementation "android.arch.paging:runtime:1.0.1"
+    }
+}
+
+ext.applyLiveDataDependencies = {
+    dependencies {
+        implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+        annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.0.0'
+    }
+}
+
+//::::::::::::::::::::::::::::::::::::::::::::::::: DEPENDENCIES ::::::::::::::::::::::::::::::::::::::::::::::::::::::/
+//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::/
+
+//::::::::::::::::::::::::::::::::::::::::::::::::: METHODS :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::/
+import java.security.MessageDigest
+
+ext.throwLog = { text ->
+    throw new GradleException(text)
+}
+
+ext.encrypt = { str ->
+    return str.bytes.encodeBase64().toString().bytes.encodeBase64().toString()
+}
+
+ext.generateHash = {
+    MessageDigest.getInstance("MD5").digest(Math.random().toString().bytes).encodeHex().toString().substring(0, 8)
+}
+
+ext.createKeystoreCommand = { rawName ->
+    println("PASS_GENERATE:${rawName}_${PASS_SUFIX}")
+    def command = "keytool -genkey -v -keystore ${rawName}.jks -alias ${rawName} -keypass ${rawName}_${PASS_SUFIX} " +
+            "-storepass ${rawName}_${PASS_SUFIX} -keyalg RSA -keysize 2048 -validity 10000 -dname \"cn=${generateHash()}\""
+    return command
+}
+
+task createKeystore(type: Exec) {
+    workingDir '..'
+    def command = createKeystoreCommand(rootProject.name)
+
+    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+        commandLine 'cmd', '/c', command
+    } else {
+        commandLine 'sh', '-c', command
+    }
+}
+
+task createTestKeystore(type: Exec) {
+    workingDir '..'
+    def command = createKeystoreCommand(DEBUG_KEY_NAME)
+
+    if (System.getProperty('os.name').toLowerCase(Locale.ROOT).contains('windows')) {
+        commandLine 'cmd', '/c', command
+    } else {
+        commandLine 'sh', '-c', command
+    }
+}
+
+ext.getFile = { File fileP, name = null ->
+    try {
+        def filename = fileP.list(new FilenameFilter() {
+            @Override
+            boolean accept(File file1, String s) {
+                if (name != null) return s == name
+                else return file1.isDirectory() && !s.startsWith(".") && !file1.isHidden()
+            }
+        })[0]
+        return file(fileP.getPath() + "\\" + filename)
+    } catch (Exception e) {
+        println(e.toString())
+        return null
+    }
+}
+
+ext.stripExtension = { filename -> return filename.split("\\.")[0] }
+
+def renameAPK(variant, defaultConfig, buildType) {
+    variant.outputs.all { output ->
+        outputFileName = "v${defaultConfig.versionName}_${TASK_NUMBER}_${variant.applicationId}_${buildType}.apk"
+    }
+}
+//::::::::::::::::::::::::::::::::::::::::::::::::: METHODS :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::/
+//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::/
