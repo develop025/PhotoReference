@@ -1,8 +1,9 @@
-package com.example.photoreference.ui.main
+package com.example.photoreference.ui.screen
 
 import android.os.Build
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.example.photoreference.ui.screen.IScreenDelegate
 
 class ScreenDelegate(private val activity: AppCompatActivity) :
     IScreenDelegate {

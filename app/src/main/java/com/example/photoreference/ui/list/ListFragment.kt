@@ -33,7 +33,7 @@ class ListFragment : Fragment() {
     }
 
     private fun showImages() {
-        viewModel.getImages(requestTag).observe(this, Observer { list ->
+        viewModel.getImages("tag").observe(this, Observer { list ->
             list?.let {
                 photoAdapter.submitList(it)
             }

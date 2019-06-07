@@ -2,6 +2,7 @@ package com.example.photoreference.di
 
 import com.example.photoreference.api.FlickrService
 import com.example.photoreference.api.GithubService
+import com.example.photoreference.data.Repo
 import com.example.photoreference.ui.list.ListViewModel
 import com.example.photoreference.ui.list.paged.PhotoDataSource
 import com.example.photoreference.ui.list.paged.PhotoDataSourceFactory
@@ -25,6 +26,7 @@ const val GITHUB_URL: String = "https://raw.githubusercontent.com/"
 val mainModule = module {
     viewModel { ListViewModel(get()) }
     viewModel { MenuViewModel(get()) }
+    single { Repo() }
     factory { PhotoDataSourceFactory(get()) }
     factory { PhotoDataSource(get()) }
     factory { provideGson() }
