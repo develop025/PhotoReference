@@ -1,5 +1,6 @@
 package com.example.photoreference.ui.list.paged
 
+import android.util.Log
 import androidx.paging.PageKeyedDataSource
 import com.example.photoreference.api.FlickrService
 import com.example.photoreference.data.photo.Photo
@@ -12,6 +13,10 @@ class PhotoDataSource(
     private val pixelService: FlickrService
 ) : PageKeyedDataSource<Int, Photo>() {
     var tag: String = "tag"
+
+    init {
+        Log.d("myapp","init PhotoDataSource")
+    }
     override fun loadInitial(
         params: LoadInitialParams<Int>,
         callback: LoadInitialCallback<Int, Photo>
