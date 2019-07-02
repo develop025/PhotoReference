@@ -2,10 +2,11 @@ package com.example.photoreference.di
 
 import com.example.photoreference.api.FlickrService
 import com.example.photoreference.api.GithubService
+import com.example.photoreference.data.Repo
+import com.example.photoreference.ui.list.CategoryViewModel
 import com.example.photoreference.ui.list.ListViewModel
 import com.example.photoreference.ui.list.paged.PhotoDataSource
 import com.example.photoreference.ui.list.paged.PhotoDataSourceFactory
-import com.example.photoreference.ui.list.CategoryViewModel
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -32,6 +33,7 @@ val mainModule = module {
     factory { provideExecutor() }
     factory { provideFlickrApiService(get(), get(), FLICKR_URL) }
     factory { provideGithubApiService(get(), get(), GITHUB_URL) }
+    single { Repo() }
 }
 
 val referenceApp = listOf(mainModule)
