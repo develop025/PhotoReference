@@ -1,4 +1,4 @@
-package com.example.photoreference.ui.main
+package com.example.photoreference.ui.screen
 
 import android.os.Build
 import android.view.View

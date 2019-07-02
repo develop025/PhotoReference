@@ -1,4 +1,4 @@
-package com.example.photoreference
+package com.example.photoreference.frame
 
 import android.app.Application
 import com.example.photoreference.di.referenceApp

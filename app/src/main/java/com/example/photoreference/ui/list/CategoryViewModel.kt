@@ -1,4 +1,4 @@
-package com.example.photoreference.ui.menu
+package com.example.photoreference.ui.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,7 +9,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MenuViewModel(private val githubService: GithubService) : ViewModel() {
+class CategoryViewModel(private val githubService: GithubService) : ViewModel() {
     private val menu = MutableLiveData<Categories>()
 
     fun getMenus(): LiveData<Categories> {

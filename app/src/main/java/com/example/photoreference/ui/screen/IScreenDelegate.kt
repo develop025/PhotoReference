@@ -1,4 +1,4 @@
-package com.example.photoreference.ui.main
+package com.example.photoreference.ui.screen
 
 interface IScreenDelegate {
     fun setFullScreen()

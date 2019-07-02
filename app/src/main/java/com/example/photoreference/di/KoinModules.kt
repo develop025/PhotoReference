@@ -5,7 +5,7 @@ import com.example.photoreference.api.GithubService
 import com.example.photoreference.ui.list.ListViewModel
 import com.example.photoreference.ui.list.paged.PhotoDataSource
 import com.example.photoreference.ui.list.paged.PhotoDataSourceFactory
-import com.example.photoreference.ui.menu.MenuViewModel
+import com.example.photoreference.ui.list.CategoryViewModel
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -24,7 +24,7 @@ const val GITHUB_URL: String = "https://raw.githubusercontent.com/"
 
 val mainModule = module {
     viewModel { ListViewModel(get()) }
-    viewModel { MenuViewModel(get()) }
+    viewModel { CategoryViewModel(get()) }
     factory { PhotoDataSourceFactory(get()) }
     factory { PhotoDataSource(get()) }
     factory { provideGson() }

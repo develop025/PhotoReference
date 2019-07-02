@@ -1,8 +1,10 @@
-package com.example.photoreference.ui.main
+package com.example.photoreference.frame
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.photoreference.R
+import com.example.photoreference.ui.screen.IScreenDelegate
+import com.example.photoreference.ui.screen.ScreenDelegate
 
 class MainActivity : AppCompatActivity() {
     private lateinit var screenDelegate: IScreenDelegate

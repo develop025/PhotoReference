@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.photoreference.R
 import com.example.photoreference.data.menu.Category
-import com.example.photoreference.ui.menu.MenuViewModel
 import kotlinx.android.synthetic.main.fragment_list.view.*
 import kotlinx.android.synthetic.main.vertical_list_item.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -18,7 +17,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class ListFragment : Fragment() {
     //private lateinit var photoAdapter1: PhotosListAdapter
     private val viewModel: ListViewModel by viewModel()
-    private val menuViewModel: MenuViewModel by viewModel()
+    private val menuViewModel: CategoryViewModel by viewModel()
     private var requestTag: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
