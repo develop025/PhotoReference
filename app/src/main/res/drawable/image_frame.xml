@@ -10,7 +10,7 @@
             <solid android:color="@android:color/transparent" />
             <stroke
                 android:width="32dp"
-                android:color="@color/black" />
+                android:color="@android:color/black" />
             <corners android:radius="32dp" />
         </shape>
     </item>

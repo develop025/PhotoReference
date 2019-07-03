@@ -6,7 +6,7 @@
     android:layout_width="100dp"
     android:layout_height="100dp"
     android:adjustViewBounds="true"
-    android:background="@color/black"
+    android:background="@android:color/black"
     android:contentDescription="@string/photo"
     android:foreground="@drawable/image_frame"
     android:scaleType="centerCrop"

@@ -21,11 +21,11 @@ class ListFragment : Fragment() {
     private val viewModel: ListViewModel by viewModel()
     private val menuViewModel: CategoryViewModel by viewModel()
     private val repo: Repo by inject()
-    private var requestTag: String = ""
+   //private var requestTag: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestTag = arguments?.getString("tag") ?: "tag"
+        //requestTag = arguments?.getString("tag") ?: "tag"
     }
 
     override fun onCreateView(
@@ -73,7 +73,7 @@ class ListFragment : Fragment() {
 
         fun bind(category: Category) {
             initPaged(view)
-            showImages()
+            showImages(category)
             showTitle(view, category)
             /*  Glide.with(view.menuImage)
                   .load(category.icon)
@@ -86,8 +86,8 @@ class ListFragment : Fragment() {
               }*/
         }
 
-        private fun showImages() {
-            viewModel.getImages(requestTag).observe(this@ListFragment, Observer { list ->
+        private fun showImages(category: Category) {
+            viewModel.getImages(category.tag).observe(this@ListFragment, Observer { list ->
                 list?.let {
                     photoAdapter.submitList(it)
                 }
