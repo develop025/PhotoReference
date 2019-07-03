@@ -10,7 +10,7 @@ class Category(
     private val id: String? = null,
     @SerializedName("name")
     @Expose
-    private val name: String? = null,
+    val name: String? = null,
     @SerializedName("title")
     @Expose
     val title: List<Title>? = null,

@@ -21,7 +21,7 @@ data class Photo(
     private val farm: Int? = null,
     @SerializedName("title")
     @Expose
-    private val title: String? = null,
+    val title: String? = null,
     @SerializedName("ispublic")
     @Expose
     private val ispublic: Int? = null,

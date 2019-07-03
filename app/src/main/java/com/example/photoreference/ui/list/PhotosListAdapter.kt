@@ -1,12 +1,13 @@
 package com.example.photoreference.ui.list
 
+import android.graphics.Point
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.photoreference.data.photo.Photo
 
-class PhotosListAdapter :
+class PhotosListAdapter(val imageSize: Point) :
     PagedListAdapter<Photo, RecyclerView.ViewHolder>(PhotoDiffCallback) {
 
     companion object {
@@ -25,7 +26,7 @@ class PhotosListAdapter :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return PhotoViewHolder.create(parent)
+        return PhotoViewHolder.create(parent,imageSize)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

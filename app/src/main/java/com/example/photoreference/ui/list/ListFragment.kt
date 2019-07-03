@@ -9,15 +9,18 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.photoreference.R
+import com.example.photoreference.data.Repo
 import com.example.photoreference.data.menu.Category
 import kotlinx.android.synthetic.main.fragment_list.view.*
 import kotlinx.android.synthetic.main.vertical_list_item.view.*
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ListFragment : Fragment() {
     //private lateinit var photoAdapter1: PhotosListAdapter
     private val viewModel: ListViewModel by viewModel()
     private val menuViewModel: CategoryViewModel by viewModel()
+    private val repo: Repo by inject()
     private var requestTag: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,6 +74,7 @@ class ListFragment : Fragment() {
         fun bind(category: Category) {
             initPaged(view)
             showImages()
+            showTitle(view, category)
             /*  Glide.with(view.menuImage)
                   .load(category.icon)
                   .into(view.menuImage)
@@ -96,7 +100,7 @@ class ListFragment : Fragment() {
         }
 
         private fun initPaged(view: View) {
-            photoAdapter = PhotosListAdapter()
+            photoAdapter = PhotosListAdapter(repo.imageSize)
             view.horizontalList?.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             val spacingInPixels = resources.getDimensionPixelSize(R.dimen.spacing)
@@ -107,5 +111,9 @@ class ListFragment : Fragment() {
              view.recyclerView1?.addItemDecoration(SpacesItemDecoration(spacingInPixels))
              view.recyclerView1?.adapter = photoAdapter1*/
         }
+    }
+
+    private fun showTitle(view: View, category: Category) {
+        view.titleText.text = category.name
     }
 }
