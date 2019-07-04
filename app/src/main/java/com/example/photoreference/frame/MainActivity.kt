@@ -9,6 +9,7 @@ import com.example.photoreference.ui.screen.DpTransformation
 import com.example.photoreference.ui.screen.IScreenDelegate
 import com.example.photoreference.ui.screen.ScreenDelegate
 import org.koin.android.ext.android.inject
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var screenDelegate: IScreenDelegate
@@ -19,8 +20,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         screenDelegate = ScreenDelegate(this)
         screenDelegate.setFullScreen()
+        determineScreenSize()
+        determineLanguage()
+    }
 
+    private fun determineLanguage() {
+        repo.language = Locale.getDefault().language
+    }
 
+    private fun determineScreenSize() {
         val display = windowManager.defaultDisplay
         val size = Point()
         display.getSize(size)
