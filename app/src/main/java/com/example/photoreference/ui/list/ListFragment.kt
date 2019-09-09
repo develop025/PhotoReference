@@ -21,7 +21,7 @@ class ListFragment : Fragment() {
     private val viewModel: ListViewModel by viewModel()
     private val menuViewModel: CategoryViewModel by viewModel()
     private val repo: Repo by inject()
-   //private var requestTag: String = ""
+    //private var requestTag: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,6 +114,15 @@ class ListFragment : Fragment() {
     }
 
     private fun showTitle(view: View, category: Category) {
-        view.titleText.text = category.name
+        category.title?.forEach {
+            if (it.language == repo.language) {
+                view.titleText.text = it.value
+                return
+            }
+            if (it.default) {
+                view.titleText.text = it.value
+                return
+            }
+        }
     }
 }

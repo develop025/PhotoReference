@@ -10,5 +10,8 @@ class Title(
     val language: String? = null,
     @SerializedName("value")
     @Expose
-    val value: String? = null
+    val value: String? = null,
+    @SerializedName("default")
+    @Expose
+    val default: Boolean = false
 )
