@@ -10,23 +10,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.photoreference.R
 import com.example.photoreference.data.Repo
-import com.example.photoreference.data.menu.Category
+import com.example.photoreference.data.db.tables.Category
 import kotlinx.android.synthetic.main.fragment_list.view.*
 import kotlinx.android.synthetic.main.vertical_list_item.view.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ListFragment : Fragment() {
-    //private lateinit var photoAdapter1: PhotosListAdapter
     private val viewModel: ListViewModel by viewModel()
     private val menuViewModel: CategoryViewModel by viewModel()
     private val repo: Repo by inject()
-    //private var requestTag: String = ""
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        //requestTag = arguments?.getString("tag") ?: "tag"
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,11 +31,9 @@ class ListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        menuViewModel.getMenus().observe(viewLifecycleOwner, Observer { categories ->
-            categories?.categories?.let {
-                view.recyclerView.layoutManager = LinearLayoutManager(context)
-                view.recyclerView.adapter = VerticalListAdapter(it)
-            }
+        menuViewModel.categoryList.observe(viewLifecycleOwner, Observer { categories ->
+            view.recyclerView.layoutManager = LinearLayoutManager(context)
+            view.recyclerView.adapter = VerticalListAdapter(categories)
         })
 
         /*  initPaged(view)
@@ -50,7 +41,7 @@ class ListFragment : Fragment() {
     }
 
     inner class VerticalListAdapter(
-        val list: List<Category>
+        val list: List<com.example.photoreference.data.db.tables.Category>
     ) : RecyclerView.Adapter<VerticalListItemHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VerticalListItemHolder {
             val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
@@ -80,9 +71,9 @@ class ListFragment : Fragment() {
                   .into(view.menuImage)
 
               val country = Locale.getDefault().country
-              category.title?.forEach {
+              category.gitTitle?.forEach {
                   if (it.language?.toLowerCase().equals(country.toLowerCase()))
-                      view.title.text = it.value
+                      view.gitTitle.text = it.value
               }*/
         }
 
@@ -111,18 +102,12 @@ class ListFragment : Fragment() {
              view.recyclerView1?.addItemDecoration(SpacesItemDecoration(spacingInPixels))
              view.recyclerView1?.adapter = photoAdapter1*/
         }
-    }
 
-    private fun showTitle(view: View, category: Category) {
-        category.title?.forEach {
-            if (it.language == repo.language) {
-                view.titleText.text = it.value
-                return
-            }
-            if (it.default) {
-                view.titleText.text = it.value
-                return
-            }
+        private fun showTitle(view: View, category: Category) {
+            repo.getTitle(category).observe(this@ListFragment, Observer { title ->
+                view.titleText.text = title.value
+            })
         }
     }
 }
+

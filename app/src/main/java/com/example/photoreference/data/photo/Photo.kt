@@ -19,7 +19,7 @@ data class Photo(
     @SerializedName("farm")
     @Expose
     private val farm: Int? = null,
-    @SerializedName("title")
+    @SerializedName("gitTitle")
     @Expose
     val title: String? = null,
     @SerializedName("ispublic")

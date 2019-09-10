@@ -1,26 +1,31 @@
 package com.example.photoreference.data.menu
 
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
-
+import androidx.room.Embedded
+import androidx.room.Relation
+import com.example.photoreference.data.db.tables.Category
+import com.example.photoreference.data.db.tables.Title
 
 class Category(
-    @SerializedName("id")
+    /*@SerializedName("id")
     @Expose
-    private val id: String? = null,
+    val id: Int = 0,
     @SerializedName("name")
     @Expose
     val name: String? = null,
-    @SerializedName("title")
+    @SerializedName("gitTitle")
     @Expose
-    val title: List<Title>? = null,
+    val gitTitle: List<GitTitle>? = null,
     @SerializedName("order")
-    @Expose
-    private val order: String? = null,
+    @Expose val order: String? = null,
     @SerializedName("icon")
     @Expose
     val icon: String? = null,
     @SerializedName("tag")
     @Expose
-    val tag: String = ""
+    val tag: String = ""*/
+
+    @Embedded
+    var category: Category,
+    @Relation(parentColumn = "id", entityColumn = "category", entity = Title::class)
+    var titles: List<Title>? = null
 )

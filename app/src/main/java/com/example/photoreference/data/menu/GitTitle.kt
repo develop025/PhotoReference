@@ -4,14 +4,11 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 
-class Title(
+class GitTitle(
     @SerializedName("language")
     @Expose
     val language: String? = null,
     @SerializedName("value")
     @Expose
-    val value: String? = null,
-    @SerializedName("default")
-    @Expose
-    val default: Boolean = false
+    val value: String? = null
 )
