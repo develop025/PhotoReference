@@ -26,7 +26,10 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: "androidx.navigation.safeargs.kotlin"
 
+apply plugin: 'kotlin-kapt'
+
 apply from: "../common.gradle"
+
 applyCommonXDependencies()
 applyGlideDependencies()
 applyRetrofitDependencies()
@@ -34,6 +37,7 @@ applyListDependencies()
 applyPagingDependencies()
 applyLiveDataDependencies()
 applyStethoDependencies()
+applyRoomDependencies()
 
 android {
     applyConfig()

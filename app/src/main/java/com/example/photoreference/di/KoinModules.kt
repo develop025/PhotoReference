@@ -1,8 +1,12 @@
 package com.example.photoreference.di
 
+import android.content.Context
+import android.util.Log
+import androidx.room.Room
 import com.example.photoreference.api.FlickrService
 import com.example.photoreference.api.GithubService
 import com.example.photoreference.data.Repo
+import com.example.photoreference.data.db.ReferencesDatabase
 import com.example.photoreference.ui.list.CategoryViewModel
 import com.example.photoreference.ui.list.ListViewModel
 import com.example.photoreference.ui.list.paged.PhotoDataSource
@@ -34,6 +38,7 @@ val mainModule = module {
     factory { provideFlickrApiService(get(), get(), FLICKR_URL) }
     factory { provideGithubApiService(get(), get(), GITHUB_URL) }
     single { Repo() }
+    single { provideDatabase(get()) }
 }
 
 val referenceApp = listOf(mainModule)
@@ -75,4 +80,15 @@ fun provideGithubApiService(client: OkHttpClient, gson: Gson, baseUrl: String): 
         .build()
 
     return retrofit.create(GithubService::class.java)
+}
+
+fun provideDatabase(context: Context): ReferencesDatabase {
+    Log.d("myapp", "init provideDatabase")
+    return Room.databaseBuilder(
+        context,
+        ReferencesDatabase::class.java,
+        "references_db"
+    )
+        .fallbackToDestructiveMigration()
+        .build()
 }
