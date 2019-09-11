@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 class GitCategories(
-    @SerializedName("categories")
+    @SerializedName("gitCategories")
     @Expose
-    val categories: List<Category>? = null
+    val gitCategories: List<GitCategory>? = null
 )

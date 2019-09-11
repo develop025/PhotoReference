@@ -2,8 +2,8 @@ package com.example.photoreference.data.db
 
 class Converters {
  /*   @TypeConverter
-    fun fromGitCategory(gitCategory: Category): Category {
-        return Category(
+    fun fromGitCategory(gitCategory: GitCategory): GitCategory {
+        return GitCategory(
             id = gitCategory.id,
             name = gitCategory.name,
             order = gitCategory.order,
@@ -13,12 +13,12 @@ class Converters {
     }
 
     @TypeConverter
-    fun fromGitCategory(gitCategory: Category): List<Title> {
+    fun fromGitCategory(gitCategory: GitCategory): List<Title> {
         gitCategory.gitTitle?.forEach {
 
             Title().
         }
-        return Category(
+        return GitCategory(
             id = gitCategory.id,
             name = gitCategory.name,
             order = gitCategory.order,

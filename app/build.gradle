@@ -14,6 +14,10 @@ apply from: "../common.gradle"
 android {
     applyConfig()
     flavorDimensions 'version'
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
@@ -24,7 +28,8 @@ dependencies {
     implementation "androidx.navigation:navigation-runtime-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
-    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
     implementation 'com.google.android.material:material:1.0.0'
     implementation "androidx.core:core-ktx:$coreVersion"
     implementation 'android.arch.work:work-runtime:1.0.1'

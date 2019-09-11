@@ -5,7 +5,7 @@ import androidx.room.Relation
 import com.example.photoreference.data.db.tables.Category
 import com.example.photoreference.data.db.tables.Title
 
-class Category(
+class GitCategory(
     /*@SerializedName("id")
     @Expose
     val id: Int = 0,

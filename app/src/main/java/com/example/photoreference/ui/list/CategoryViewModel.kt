@@ -1,10 +1,10 @@
 package com.example.photoreference.ui.list
 
 import androidx.lifecycle.ViewModel
-import com.example.photoreference.data.Repo
+import com.example.photoreference.data.repo.CategoriesRepo
 
 class CategoryViewModel(
-    repo: Repo
+    categoriesRepo: CategoriesRepo
 ) : ViewModel() {
-    var categoryList = repo.categoryList
+    var categoryList = categoriesRepo.categoryList
 }

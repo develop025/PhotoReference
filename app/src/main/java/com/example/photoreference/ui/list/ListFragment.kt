@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.photoreference.R
-import com.example.photoreference.data.Repo
+import com.example.photoreference.data.repo.CategoriesRepo
 import com.example.photoreference.data.db.tables.Category
 import kotlinx.android.synthetic.main.fragment_list.view.*
 import kotlinx.android.synthetic.main.vertical_list_item.view.*
@@ -19,7 +19,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class ListFragment : Fragment() {
     private val viewModel: ListViewModel by viewModel()
     private val menuViewModel: CategoryViewModel by viewModel()
-    private val repo: Repo by inject()
+    private val categoriesRepo: CategoriesRepo by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -91,7 +91,7 @@ class ListFragment : Fragment() {
         }
 
         private fun initPaged(view: View) {
-            photoAdapter = PhotosListAdapter(repo.imageSize)
+            photoAdapter = PhotosListAdapter(categoriesRepo.imageSize)
             view.horizontalList?.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             val spacingInPixels = resources.getDimensionPixelSize(R.dimen.spacing)
@@ -104,7 +104,7 @@ class ListFragment : Fragment() {
         }
 
         private fun showTitle(view: View, category: Category) {
-            repo.getTitle(category).observe(this@ListFragment, Observer { titles ->
+            categoriesRepo.getTitle(category).observe(this@ListFragment, Observer { titles ->
                 if (titles.isNotEmpty())
                     view.titleText.text = titles[0].value
             })

@@ -5,7 +5,9 @@ import android.util.Log
 import androidx.room.Room
 import com.example.photoreference.api.FlickrService
 import com.example.photoreference.api.GithubService
-import com.example.photoreference.data.Repo
+import com.example.photoreference.data.datasource.CategoriesRemoteDataSource
+import com.example.photoreference.data.db.ReferenceDao
+import com.example.photoreference.data.repo.CategoriesRepo
 import com.example.photoreference.data.db.ReferenceDatabase
 import com.example.photoreference.ui.list.CategoryViewModel
 import com.example.photoreference.ui.list.ListViewModel
@@ -37,8 +39,10 @@ val mainModule = module {
     factory { provideExecutor() }
     factory { provideFlickrApiService(get(), get(), FLICKR_URL) }
     factory { provideGithubApiService(get(), get(), GITHUB_URL) }
-    single { Repo(get(),get()) }
+    single { CategoriesRepo(get(), get()) }
     single { provideDatabase(get()) }
+    single { provideDao(get()) }
+    factory { CategoriesRemoteDataSource(get()) }
 }
 
 val referenceApp = listOf(mainModule)
@@ -61,6 +65,8 @@ fun provideGson(): Gson {
 fun provideExecutor(): Executor {
     return Executors.newCachedThreadPool()
 }
+
+fun provideDao(db: ReferenceDatabase) = db.referenceDao
 
 fun provideFlickrApiService(client: OkHttpClient, gson: Gson, baseUrl: String): FlickrService {
     val retrofit = Retrofit.Builder()
