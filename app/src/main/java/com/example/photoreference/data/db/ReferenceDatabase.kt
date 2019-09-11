@@ -16,11 +16,11 @@ interface ReferenceDao {
     @Query("select * from categories")
     fun loadCategories(): LiveData<List<Category>>
 
-    @Query("select * from titles where category = id")
+    @Query("select * from titles where categoryId = :id")
     fun getTitle(id: Int): LiveData<List<Title>>
 }
 
-@Database(entities = [Category::class], version = 1, exportSchema = false)
+@Database(entities = [Category::class, Title::class], version = 1, exportSchema = false)
 abstract class ReferenceDatabase : RoomDatabase() {
     abstract val referenceDao: ReferenceDao
 }

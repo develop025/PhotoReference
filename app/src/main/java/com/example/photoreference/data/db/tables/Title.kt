@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "titles")
 data class Title(
     @PrimaryKey(autoGenerate = true) val id: Int,
-    val category: com.example.photoreference.data.db.tables.Category,
+    val categoryId: Int,
     val language: String? = null,
     val value: String? = null
 )

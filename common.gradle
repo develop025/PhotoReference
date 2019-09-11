@@ -1,27 +1,7 @@
-//::::::::::::::::::::::::::::::::::::::::::::::::: CONFIG ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::/
-ext {
-    anko_version = '0.10.5'
-    support_version = '28.0.0'
-    androidX_version = '1.0.0'
-    koin_version = '2.0.0'
-    room_version = '2.0.0'
-    lifecycle_version = '2.1.0'
-    appcompat_version = '1.1.0'
-    navigation_version = '2.1.0'
-    core_version = '1.0.2'
-    retrofit_version = '2.5.0'
-    okhttp_version = '4.0.1'
-}
-//::::::::::::::::::::::::::::::::::::::::::::::::: CONFIG ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::/
-//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::/
-
 //::::::::::::::::::::::::::::::::::::::::::::::::: DEBUG :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::/
 ext {
-    LOG_TAG = "myapp"
     PASS_SUFIX = "secret_for_pass"
     DEBUG_KEY_NAME = "debugkey"
-
-
 }
 //::::::::::::::::::::::::::::::::::::::::::::::::: DEBUG :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::/
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::/
@@ -34,28 +14,28 @@ ext.buildConfigField = { flavor, name, value, shouldEncrypt = false ->
 
 ext.applyConfig = {
     android {
-        compileSdkVersion 29
+        compileSdkVersion rootProject.minSdkVersion
+
+
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8
             targetCompatibility JavaVersion.VERSION_1_8
         }
 
         defaultConfig {
-            minSdkVersion 19
-            targetSdkVersion 29
+            targetSdkVersion rootProject.targetSdkVersion
+            minSdkVersion rootProject.minSdkVersion
 
-            versionCode VERSION
-            versionName "$VERSION.0"
+            versionCode rootProject.versionCode
+            versionName "${rootProject.versionCode}.0"
 
             initDefaultResValues()
         }
 
         buildTypes {
             debug {
-                initDebugResValues()
-
-                minifyEnabled ENABLE_DEBUG_MINIFY
-                shrinkResources ENABLE_DEBUG_MINIFY
+                minifyEnabled rootProject.enableDebugMinify
+                shrinkResources rootProject.enableDebugMinify
 
                 proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
                 applicationVariants.all { variant ->
@@ -64,8 +44,6 @@ ext.applyConfig = {
             }
 
             release {
-                initReleaseResValues()
-
                 minifyEnabled true
                 shrinkResources true
 
@@ -108,16 +86,8 @@ ext.applyConfig = {
             }
             finalRelease {
                 dimension "version"
-                applicationId APPLICATION_ID
+                applicationId rootProject.applicationId
                 signingConfig signingConfigs.finalRelease
-            }
-        }
-        variantFilter { variant ->
-            def names = variant.flavors*.name
-            if (BLOCK && (names.contains("finalRelease") || names.contains("develop"))) {
-                setIgnore(true)
-            } else if (!BLOCK && !IS_RELEASE && names.contains("finalRelease")) {
-                setIgnore(true)
             }
         }
     }
@@ -126,105 +96,11 @@ ext.applyConfig = {
 ext.initDefaultResValues = {
     android {
         defaultConfig {
-            resValue "string", "app_name", "${APPLICATION_NAME}"
-        }
-    }
-}
-
-ext.initDebugResValues = {
-    android {
-        buildTypes {
-            debug {
-                buildConfigField(debug, "LOG_TAG", "${LOG_TAG}", true)
-            }
-        }
-    }
-}
-
-ext.initReleaseResValues = {
-    android {
-        buildTypes {
-            release {
-                buildConfigField(release, "LOG_TAG", "${LOG_TAG}", true)
-            }
+            resValue "string", "app_name", "${rootProject.appName}"
         }
     }
 }
 //::::::::::::::::::::::::::::::::::::::::::::::::: COMMON ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::/
-//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::/
-
-//::::::::::::::::::::::::::::::::::::::::::::::::: DEPENDENCIES ::::::::::::::::::::::::::::::::::::::::::::::::::::::/
-ext.applyCommonXDependencies = {
-    dependencies {
-        implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-        implementation 'androidx.appcompat:appcompat:1.1.0'
-        implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-        implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-        testImplementation 'junit:junit:4.12'
-        androidTestImplementation 'androidx.test:runner:1.2.0'
-        androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-        implementation "androidx.navigation:navigation-runtime-ktx:$navigation_version"
-        implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
-        implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
-        implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
-        implementation "org.koin:koin-androidx-scope:$koin_version"
-        implementation "org.koin:koin-androidx-viewmodel:$koin_version"
-        implementation 'com.google.android.material:material:1.0.0'
-        implementation "androidx.core:core-ktx:$core_version"
-        implementation 'android.arch.work:work-runtime:1.0.1'
-    }
-}
-
-ext.applyListDependencies = {
-    dependencies {
-        implementation 'androidx.recyclerview:recyclerview:1.0.0'
-    }
-}
-
-ext.applyGlideDependencies = {
-    dependencies {
-        implementation 'com.github.bumptech.glide:glide:4.9.0'
-    }
-}
-
-ext.applyRetrofitDependencies = {
-    dependencies {
-        implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-        implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
-        implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
-        implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
-    }
-}
-
-ext.applyPagingDependencies = {
-    dependencies {
-        implementation "androidx.paging:paging-runtime:2.1.0"
-    }
-}
-
-ext.applyStethoDependencies = {
-    dependencies {
-        implementation "com.facebook.stetho:stetho:1.5.1"
-        implementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
-    }
-}
-
-ext.applyLiveDataDependencies = {
-    dependencies {
-        /*implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
-        annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"*/
-        implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
-    }
-}
-
-ext.applyRoomDependencies = {
-    dependencies {
-        implementation "androidx.room:room-runtime:$room_version"
-        kapt "androidx.room:room-compiler:$room_version"
-    }
-}
-
-//::::::::::::::::::::::::::::::::::::::::::::::::: DEPENDENCIES ::::::::::::::::::::::::::::::::::::::::::::::::::::::/
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::/
 
 //::::::::::::::::::::::::::::::::::::::::::::::::: METHODS :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::/
@@ -291,7 +167,7 @@ ext.stripExtension = { filename -> return filename.split("\\.")[0] }
 
 def renameAPK(variant, defaultConfig, buildType) {
     variant.outputs.all { output ->
-        outputFileName = "v${defaultConfig.versionName}_${TASK_NUMBER}_${variant.applicationId}_${buildType}.apk"
+        outputFileName = "v${defaultConfig.versionName}_${variant.applicationId}_${buildType}.apk"
     }
 }
 //::::::::::::::::::::::::::::::::::::::::::::::::: METHODS :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::/

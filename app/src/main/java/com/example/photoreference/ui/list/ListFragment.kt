@@ -67,11 +67,11 @@ class ListFragment : Fragment() {
             showImages(category)
             showTitle(view, category)
             /*  Glide.with(view.menuImage)
-                  .load(category.icon)
+                  .load(categoryId.icon)
                   .into(view.menuImage)
 
               val country = Locale.getDefault().country
-              category.gitTitle?.forEach {
+              categoryId.gitTitle?.forEach {
                   if (it.language?.toLowerCase().equals(country.toLowerCase()))
                       view.gitTitle.text = it.value
               }*/
@@ -104,8 +104,9 @@ class ListFragment : Fragment() {
         }
 
         private fun showTitle(view: View, category: Category) {
-            repo.getTitle(category).observe(this@ListFragment, Observer { title ->
-                view.titleText.text = title.value
+            repo.getTitle(category).observe(this@ListFragment, Observer { titles ->
+                if (titles.isNotEmpty())
+                    view.titleText.text = titles[0].value
             })
         }
     }

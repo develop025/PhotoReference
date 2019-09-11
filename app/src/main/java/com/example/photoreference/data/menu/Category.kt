@@ -26,6 +26,6 @@ class Category(
 
     @Embedded
     var category: Category,
-    @Relation(parentColumn = "id", entityColumn = "category", entity = Title::class)
+    @Relation(parentColumn = "id", entityColumn = "categoryId", entity = Title::class)
     var titles: List<Title>? = null
 )

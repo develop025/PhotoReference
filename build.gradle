@@ -1,7 +1,38 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.3.31'
+    ext {
+        // App data
+        applicationId = "xxx.xxxxxxxx.xxxxx"
+        appName = "PhotoReference"
+        enableDebugMinify = true
+
+        // Services
+        flickrApiKey = "e52398cf1e4ade2f455cf132a5b3a281"
+        flickrApiSecrtet = "3890398e2633fccd"
+
+        versionCode = 1
+        // Sdk and tools
+        compileSdkVersion = 29
+        minSdkVersion = 19
+        targetSdkVersion = 29
+
+        // App dependencies
+        kotlin_version = '1.3.50'
+        anko_version = '0.10.5'
+        support_version = '28.0.0'
+        androidX_version = '1.0.0'
+        koin_version = '2.0.1'
+        room_version = '2.1.0'
+        lifecycle_version = '2.1.0'
+        appcompat_version = '1.1.0'
+        navigation_version = '2.1.0'
+        core_version = '1.1.0'
+        retrofit_version = '2.5.0'
+        okhttp_version = '4.0.1'
+        navigationVersion = '2.1.0'
+    }
+
     repositories {
         google()
         jcenter()
@@ -10,7 +41,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'androidx.navigation:navigation-safe-args-gradle-plugin:2.0.0'
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
