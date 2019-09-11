@@ -14,8 +14,7 @@ ext.buildConfigField = { flavor, name, value, shouldEncrypt = false ->
 
 ext.applyConfig = {
     android {
-        compileSdkVersion rootProject.minSdkVersion
-
+        compileSdkVersion rootProject.compileSdkVersion
 
         compileOptions {
             sourceCompatibility JavaVersion.VERSION_1_8
