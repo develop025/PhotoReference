@@ -2,6 +2,7 @@ package com.example.photoreference.data.db.tables
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -13,5 +14,6 @@ data class Category(
     val icon: String? = null,
     val tag: String = "",
     @Expose
+    @TypeConverter(TitleTypeConverter.class)
     val title: List<Title>
 )
