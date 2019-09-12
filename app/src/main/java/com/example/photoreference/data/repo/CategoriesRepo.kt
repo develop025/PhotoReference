@@ -11,6 +11,7 @@ import com.example.photoreference.data.resultLiveData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import timber.log.Timber
 
 class CategoriesRepo(
     private val categoriesRemoteDataSource: CategoriesRemoteDataSource,
@@ -19,9 +20,9 @@ class CategoriesRepo(
     lateinit var language: String
     lateinit var imageSize: Point
 
-    var categoryList: LiveData<List<Category>> = referenceDao.loadCategories()
+    /* var categoryList: LiveData<List<Category>> = referenceDao.loadCategories()
 
-    /*init {
+     *//*init {
         updateCategories()
     }*/
 
@@ -30,7 +31,8 @@ class CategoriesRepo(
         networkCall = { categoriesRemoteDataSource.getMenuItems() },
         saveCallResult = {
             it.gitCategories?.forEach { category ->
-                referenceDao.insertCategory(category.category)
+                Timber.tag("myapp").d("result: ${category.name.toString()}")
+                //referenceDao.insertCategory(category.category)
             }
         }).distinctUntilChanged()
 

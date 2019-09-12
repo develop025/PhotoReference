@@ -13,7 +13,7 @@ interface ReferenceDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTitle(title: Title)
 
-    @Query("select * from gitCategories")
+    @Query("select * from categories")
     fun loadCategories(): LiveData<List<Category>>
 
     @Query("select * from titles where categoryId = :id")

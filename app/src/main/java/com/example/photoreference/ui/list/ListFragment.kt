@@ -33,16 +33,17 @@ class ListFragment : Fragment() {
 
         menuViewModel.categoryList.observe(viewLifecycleOwner, Observer { categories ->
             view.recyclerView.layoutManager = LinearLayoutManager(context)
-            view.recyclerView.adapter = VerticalListAdapter(categories)
+            categories.data?.let {
+                view.recyclerView.adapter = VerticalListAdapter(it)
+            }
         })
 
         /*  initPaged(view)
           showImages()*/
     }
 
-    inner class VerticalListAdapter(
-        val list: List<com.example.photoreference.data.db.tables.Category>
-    ) : RecyclerView.Adapter<VerticalListItemHolder>() {
+    inner class VerticalListAdapter(val list: List<Category>) :
+        RecyclerView.Adapter<VerticalListItemHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VerticalListItemHolder {
             val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
             return VerticalListItemHolder(view)
@@ -104,10 +105,11 @@ class ListFragment : Fragment() {
         }
 
         private fun showTitle(view: View, category: Category) {
-            categoriesRepo.getTitle(category).observe(this@ListFragment, Observer { titles ->
-                if (titles.isNotEmpty())
-                    view.titleText.text = titles[0].value
-            })
+            //todo
+            /*  categoriesRepo.getTitle(category).observe(this@ListFragment, Observer { titles ->
+                  if (titles.isNotEmpty())
+                      view.titleText.text = titles[0].value
+              })*/
         }
     }
 }

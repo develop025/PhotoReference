@@ -6,5 +6,5 @@ import com.example.photoreference.data.repo.CategoriesRepo
 class CategoryViewModel(
     categoriesRepo: CategoriesRepo
 ) : ViewModel() {
-    var categoryList = categoriesRepo.categoryList
+    val categoryList by lazy { categoriesRepo.observeCategories() }
 }

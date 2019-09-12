@@ -19,7 +19,7 @@ fun <T, A> resultLiveData(
     saveCallResult: suspend (A) -> Unit
 ): LiveData<Result<T>> =
     liveData(Dispatchers.IO) {
-        emit(Result.loading<T>())
+        emit(Result.loading())
         val source = databaseQuery.invoke().map { Result.success(it) }
         emitSource(source)
 

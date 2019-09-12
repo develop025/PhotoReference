@@ -5,7 +5,7 @@ buildscript {
         // App data
         applicationId = "xxx.xxxxxxxx.xxxxx"
         appName = "PhotoReference"
-        enableDebugMinify = true
+        enableDebugMinify = false
 
         // Services
         flickrApiKey = "e52398cf1e4ade2f455cf132a5b3a281"

@@ -1,10 +1,11 @@
 package com.example.photoreference.data.menu
 
+import com.example.photoreference.data.db.tables.Category
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class GitCategories(
-    @SerializedName("gitCategories")
+data class GitCategories(
+    @SerializedName("categories")
     @Expose
-    val gitCategories: List<GitCategory>? = null
+    val gitCategories: List<Category>? = null
 )
