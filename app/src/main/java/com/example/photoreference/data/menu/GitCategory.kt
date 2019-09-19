@@ -1,9 +1,5 @@
 package com.example.photoreference.data.menu
 
-import androidx.room.Embedded
-import androidx.room.Relation
-import com.example.photoreference.data.db.tables.Category
-import com.example.photoreference.data.db.tables.Title
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -29,6 +25,6 @@ class GitCategory(
     /*@Embedded
     var category: Category*/
 //    ,
-    /*@Relation(parentColumn = "id", entityColumn = "categoryId", entity = Title::class)
-    var titles: List<Title>? = null*/
+    /*@Relation(parentColumn = "id", entityColumn = "categoryId", entity = TitleCat::class)
+    var titles: List<TitleCat>? = null*/
 )

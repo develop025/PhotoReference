@@ -6,18 +6,22 @@ import com.google.gson.Gson
 
 
 class TitleTypeConverter {
-    private val gson = Gson()
-    private val type = object : TypeToken<List<Title>>() {
+    companion object {
+        private val gson = Gson()
+        private val type = object : TypeToken<List<TitleCat>>() {
 
-    }.type
+        }.type
 
-    @TypeConverter
-    fun stringToNestedData(json: String): List<Title> {
-        return gson.fromJson<List<Title>>(json, type)
-    }
+        @TypeConverter
+        @JvmStatic
+        fun stringToList(json: String): List<TitleCat> {
+            return gson.fromJson<List<TitleCat>>(json, type)
+        }
 
-    @TypeConverter
-    fun nestedDataToString(nestedData: List<Title>): String {
-        return gson.toJson(nestedData, type)
+        @TypeConverter
+        @JvmStatic
+        fun listToString(list: List<TitleCat>): String {
+            return gson.toJson(list, type)
+        }
     }
 }

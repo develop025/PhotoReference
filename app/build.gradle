@@ -38,6 +38,7 @@ dependencies {
     implementation "androidx.paging:paging-runtime:2.1.0"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion"
     implementation "androidx.room:room-runtime:$roomVersion"
+    kapt "android.arch.persistence.room:compiler:1.1.1"
     kapt "androidx.room:room-compiler:$roomVersion"
 
     // Tools

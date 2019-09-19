@@ -1,10 +1,9 @@
 package com.example.photoreference.data.db.tables
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverter
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
+import androidx.room.TypeConverters
 
 @Entity(tableName = "categories")
 data class Category(
@@ -13,7 +12,7 @@ data class Category(
     val order: String? = null,
     val icon: String? = null,
     val tag: String = "",
-    @Expose
-    @TypeConverter(TitleTypeConverter.class)
-    val title: List<Title>
+    @TypeConverters(TitleTypeConverter::class)
+//    @Embedded(prefix = "media")
+    val title: List<TitleCat>? = null
 )
