@@ -17,8 +17,8 @@ interface ReferenceDao {
     @Query("select * from categories")
     fun loadCategories(): LiveData<List<Category>>
 
-    @Query("select * from titles where categoryId = :id")
-    fun getTitle(id: Int): LiveData<List<TitleCat>>
+    @Query("select * from titles where categoryId = :id and language=:language ")
+    fun getTitle(id: Int, language: String): LiveData<List<TitleCat>>
 }
 
 @Database(entities = [Category::class, TitleCat::class], version = 1, exportSchema = false)

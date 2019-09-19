@@ -7,18 +7,14 @@ import com.example.photoreference.data.db.ReferenceDao
 import com.example.photoreference.data.resultLiveData
 import timber.log.Timber
 
+const val defaultLanguage = "ua"
+
 class CategoriesRepo(
     private val categoriesRemoteDataSource: CategoriesRemoteDataSource,
     private val referenceDao: ReferenceDao
 ) {
     lateinit var language: String
     lateinit var imageSize: Point
-
-    /* var categoryList: LiveData<List<Category>> = referenceDao.loadCategories()
-
-     *//*init {
-        updateCategories()
-    }*/
 
     fun observeCategories() = resultLiveData(
         databaseQuery = { referenceDao.loadCategories() },
@@ -34,22 +30,6 @@ class CategoriesRepo(
             }
         }).distinctUntilChanged()
 
-    /*private fun updateCategories() {
-        githubService.getMenuItems().enqueue(object : Callback<GitCategories> {
-            override fun onFailure(call: Call<GitCategories>, t: Throwable) {
-                //todo get menu error
-            }
-
-            override fun onResponse(call: Call<GitCategories>, response: Response<GitCategories>) {
-                response.body()?.gitCategories?.forEach {
-                    db.referenceDao.insertCategory(it.category)
-                    it.titles?.forEach { title ->
-                        db.referenceDao.insertTitle(title)
-                    }
-                }
-            }
-        })
-    }
-
-    fun getTitle(category: Category) = db.referenceDao.getTitle(category.id)*/
+    fun observeTitle(categoryId: Int) = referenceDao.getTitle(categoryId, language)
+    fun observeDefaultTitle(categoryId: Int) = referenceDao.getTitle(categoryId, defaultLanguage)
 }

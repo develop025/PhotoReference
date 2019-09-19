@@ -37,9 +37,6 @@ class ListFragment : Fragment() {
                 view.recyclerView.adapter = VerticalListAdapter(it)
             }
         })
-
-        /*  initPaged(view)
-          showImages()*/
     }
 
     inner class VerticalListAdapter(val list: List<Category>) :
@@ -105,6 +102,16 @@ class ListFragment : Fragment() {
         }
 
         private fun showTitle(view: View, category: Category) {
+            menuViewModel.getTitle(category.id).observe(this@ListFragment, Observer { title ->
+                if (title.isEmpty()) {
+                    menuViewModel.getDefaultTitle(category.id)
+                        .observe(this@ListFragment, Observer { title ->
+                            if (title.isNotEmpty())
+                                view.titleText.text = title[0].value
+                        })
+                } else
+                    view.titleText.text = title[0].value
+            })
             //todo
             /*  categoriesRepo.getTitle(category).observe(this@ListFragment, Observer { titles ->
                   if (titles.isNotEmpty())
